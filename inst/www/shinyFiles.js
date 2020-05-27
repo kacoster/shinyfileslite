@@ -1,4 +1,4 @@
-alert('shinyFiles');
+alert('shinyFiles 1230');
 
 var shinyFiles = (function() {
   // General functionality
