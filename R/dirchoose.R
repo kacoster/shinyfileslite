@@ -29,7 +29,7 @@ NULL
 #' @importFrom fs path dir_ls file_info path_file
 #'
 traverseDirs <- function(tree, root, restrictions, hidden) {
-  print('traverseDirs line 32')
+  message('traverseDirs line 32')
   location <- path(root, tree$name)
   if (!dir.exists(location)) return(NULL)
 
@@ -63,7 +63,7 @@ traverseDirs <- function(tree, root, restrictions, hidden) {
       tree$children <- list()
     }
   }
-  print(tree$children)
+  message(tree$children)
   tree
 }
 
@@ -83,8 +83,8 @@ traverseDirs <- function(tree, root, restrictions, hidden) {
 #' @return An updated list equal in format to oldChildren
 #'
 updateChildren <- function(oldChildren, currentChildren) {
-  print('dirchoose updateChildren')
-  print(paste0('currentChildren : ' ,currentChildren) )
+  message('dirchoose updateChildren')
+  message(paste0('currentChildren : ' ,currentChildren) )
   oldNames <- sapply(oldChildren, `[[`, "name")
   newChildren <- currentChildren[!currentChildren %in% oldNames]
   children <- oldChildren[oldNames %in% currentChildren]
@@ -121,7 +121,7 @@ updateChildren <- function(oldChildren, currentChildren) {
 #' a description of the format for the list representation.
 #'
 dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
-  print('dirchoose dirGetter')
+  message('dirchoose dirGetter')
   if (missing(filetypes)) filetypes <- NULL
   if (missing(restrictions)) restrictions <- NULL
 
@@ -162,7 +162,7 @@ dirGetter <- function(roots, restrictions, filetypes, hidden=FALSE) {
 #' @importFrom fs path dir_create
 #'
 dirCreator <- function(roots, ...) {
-  print('dirchoose dirCreator')
+  message('dirchoose dirCreator')
   function(name, path, root) {
     currentRoots <- if (inherits(roots, "function")) roots() else roots
     if (is.null(names(currentRoots))) stop("Roots must be a named vector or a function returning one")
@@ -197,7 +197,7 @@ shinyDirChoose <- function(
   defaultPath="", defaultRoot=NULL, ...
 ) {
   
-  print('dirchoose shinyDirChoose')
+  message('dirchoose shinyDirChoose')
   dirGet <- do.call(dirGetter, list(...))
   #fileGet <- do.call(fileGetter, list(...))
   dirCreate <- do.call(dirCreator, list(...))
@@ -207,6 +207,7 @@ shinyDirChoose <- function(
   clientId <- session$ns(id)
   
   sendDirectoryData <- function(message) {
+    message('sendDirectoryData')
     req(input[[id]])
     tree <- input[[paste0(id, "-modal")]]
     createDir <- input[[paste0(id, "-newDir")]]
