@@ -29,7 +29,7 @@
     #' @importFrom fs path dir_ls file_info path_file
     #'
     traverseDirs <- function(tree, root, restrictions, hidden) {
-      message('traverseDirs line 32')
+      
       location <- path(root, tree$name)
       if (!dir.exists(location))
         return(NULL)
@@ -72,7 +72,7 @@
           tree$children <- list()
         }
       }
-      message(tree$children)
+      
       tree
     }
     
@@ -92,8 +92,7 @@
     #' @return An updated list equal in format to oldChildren
     #'
     updateChildren <- function(oldChildren, currentChildren) {
-      message('dirchoose updateChildren')
-      message(paste0('currentChildren : ' , currentChildren))
+      
       oldNames <- sapply(oldChildren, `[[`, "name")
       newChildren <- currentChildren[!currentChildren %in% oldNames]
       children <- oldChildren[oldNames %in% currentChildren]
@@ -133,7 +132,7 @@
     #'
     dirGetter <-
       function(roots, restrictions, filetypes, hidden = FALSE) {
-        message('dirchoose dirGetter')
+        
         if (missing(filetypes))
           filetypes <- NULL
         if (missing(restrictions))
@@ -182,7 +181,7 @@
     #' @importFrom fs path dir_create
     #'
     dirCreator <- function(roots, ...) {
-      message('dirchoose dirCreator')
+      
       function(name, path, root) {
         currentRoots <- if (inherits(roots, "function"))
           roots()
@@ -224,7 +223,7 @@
                                defaultPath = "",
                                defaultRoot = NULL,
                                ...) {
-      message('dirchoose shinyDirChoose')
+      
       dirGet <- do.call(dirGetter, list(...))
       #fileGet <- do.call(fileGetter, list(...))
       dirCreate <- do.call(dirCreator, list(...))
@@ -234,7 +233,7 @@
       clientId <- session$ns(id)
       
       sendDirectoryData <- function(message) {
-        message('sendDirectoryData')
+        
         req(input[[id]])
         tree <- input[[paste0(id, "-modal")]]
         createDir <- input[[paste0(id, "-newDir")]]
