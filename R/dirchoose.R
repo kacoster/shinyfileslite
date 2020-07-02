@@ -35,7 +35,15 @@
         return(NULL)
       
       files <-
-        suppressWarnings(dir_ls(location, all = FALSE,type = "directory",fail = FALSE))
+        suppressWarnings(
+          dir_ls(
+            location, 
+            all = FALSE, # if TRUE hidden files are also returned.
+            type = "directory", # File type(s) to return
+            fail = FALSE,
+            regexp = "_volume" # filter paths matching _volume
+          )
+      )
       
       if (!is.null(restrictions) && length(files) != 0) {
         if (length(files) == 1) {
