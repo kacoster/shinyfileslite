@@ -60,6 +60,7 @@ getVolumes <- function(exclude) {
 
   function() {
     osSystem <- Sys.info()["sysname"]
+   
     if (osSystem == "Darwin") {
       volumes <- dir_ls("/Volumes")
       names(volumes) <- basename(volumes)

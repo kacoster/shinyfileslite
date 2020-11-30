@@ -4,7 +4,12 @@ library(fs)
 
 shinyServer(function(input, output, session) {
   volumes <- c(Home = fs::path_home(), "R Installation" = R.home(), getVolumes()())
-  shinyFileChoose(input, "file", roots = volumes, session = session)
+  shinyFileChoose(
+    input, "file", 
+    roots = volumes, 
+    session = session,
+    restrictions = c("Documents")
+    )
   shinyDirChoose(input, "directory", roots = volumes, session = session, restrictions = system.file(package = "base"))
   shinyFileSave(input, "save", roots = volumes, session = session, restrictions = system.file(package = "base"))
   

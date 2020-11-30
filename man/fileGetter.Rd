@@ -12,7 +12,7 @@ named vector of absolute filepaths (the latter is useful if the volumes
 should adapt to changes in the filesystem).}
 
 \item{restrictions}{A vector of directories within the root that should be
-filtered out of the results}
+filtered of the results}
 
 \item{filetypes}{A character vector of file extensions (without dot in front
 i.e. 'txt' not '.txt') to include in the output. Use the empty string to
@@ -33,8 +33,7 @@ returns a list of files to be passed on to shiny
 This functions returns a new function that can generate file information to
 be send to a shiny app based on a path relative to the given root. The
 function is secure in the sense that it prevents access to files outside of
-the given root directory as well as to subdirectories matching the ones given
-in restrictions. Furthermore can the output be filtered to only contain
+the given root directory. Furthermore can the output be filtered to only contain
 certain filetypes using the filter parameter and hidden files can be toggled
 with the hidden parameter.
 }

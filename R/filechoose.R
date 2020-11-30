@@ -6,8 +6,7 @@ NULL
 #' This functions returns a new function that can generate file information to
 #' be send to a shiny app based on a path relative to the given root. The
 #' function is secure in the sense that it prevents access to files outside of
-#' the given root directory as well as to subdirectories matching the ones given
-#' in restrictions. Furthermore can the output be filtered to only contain
+#' the given root directory. Furthermore can the output be filtered to only contain
 #' certain filetypes using the filter parameter and hidden files can be toggled
 #' with the hidden parameter.
 #'
@@ -16,7 +15,7 @@ NULL
 #' should adapt to changes in the filesystem).
 #'
 #' @param restrictions A vector of directories within the root that should be
-#' filtered out of the results
+#' filtered of the results
 #'
 #' @param filetypes A character vector of file extensions (without dot in front
 #' i.e. 'txt' not '.txt') to include in the output. Use the empty string to
@@ -37,6 +36,7 @@ NULL
 #' @importFrom tibble as_tibble
 #'
 fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) {
+  
   if (missing(filetypes)) {
     filetypes <- NULL
   } else if (is.function(filetypes)) {
@@ -70,14 +70,14 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
     
     writable <- as.logical(file_access(fulldir, "write"))
     files <- suppressWarnings(dir_ls(fulldir, all = hidden, fail = FALSE))
-  
+   
     if (!is.null(restrictions) && length(files) != 0) {
       if (length(files) == 1) {
-        keep <- !any(sapply(restrictions, function(x) {
+        keep <- any(sapply(restrictions, function(x) {
           grepl(x, files, fixed = T)
         }))
       } else {
-        keep <- !apply(sapply(restrictions, function(x) {
+        keep <- apply(sapply(restrictions, function(x) {
           grepl(x, files, fixed = T)
         }), 1, any)
       }
@@ -105,7 +105,6 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
     }
     
     breadcrumps <- strsplit(dir, .Platform$file.sep)[[1]]
-    
     list(
       files = as_tibble(fileInfo[, c("filename", "extension", "isdir", "size", "mtime", "ctime", "atime")]),
       writable = writable,
@@ -129,7 +128,7 @@ fileGetter <- function(roots, restrictions, filetypes, pattern, hidden = FALSE) 
 #' The root parameter specifies the starting position for the filesystem as
 #' presented to the client. This means that the client can only navigate in
 #' subdirectories of the root. Paths passed of to the `restrictions`
-#' parameter will not show up in the client view, and it is impossible to
+#' parameter will be the only directories showing in the client view, and it is possible to
 #' navigate into these subdirectories. The `filetypes` parameter takes a
 #' vector of file extensions to filter the output on, so that the client is
 #' only presented with these filetypes. The `hidden` parameter toggles

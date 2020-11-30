@@ -77,7 +77,7 @@ Restrictions on the access rights of the client can be given in several ways.
 The root parameter specifies the starting position for the filesystem as
 presented to the client. This means that the client can only navigate in
 subdirectories of the root. Paths passed of to the \code{restrictions}
-parameter will not show up in the client view, and it is impossible to
+parameter will be the only directories showing in the client view, and it is possible to
 navigate into these subdirectories. The \code{filetypes} parameter takes a
 vector of file extensions to filter the output on, so that the client is
 only presented with these filetypes. The \code{hidden} parameter toggles
